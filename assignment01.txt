@@ -1,0 +1,97 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> CREATE DATABASE AdventureWorks;
+Query OK, 1 row affected (0.15 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| adventureworks     |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> USE AdventureWorks;
+Database changed
+mysql> CREATE TABLE EMPLOYEE
+    -> (
+    -> EMPLOYEE_ID int,Name varchar(20)
+    -> );
+Query OK, 0 rows affected (1.07 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES(1, 'JAYA');
+Query OK, 1 row affected (0.14 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES(2, 'SHREYA');
+Query OK, 1 row affected (0.19 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES(3, 'REENA');
+Query OK, 1 row affected (0.18 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES(4, 'RIDDHI');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> SELECT * FROM EMPLOYEE;
++-------------+--------+
+| EMPLOYEE_ID | Name   |
++-------------+--------+
+|           1 | JAYA   |
+|           2 | SHREYA |
+|           3 | REENA  |
+|           4 | RIDDHI |
++-------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE EMPLOYEE
+    -> SET Name = 'Rohit'
+    -> WHERE EMPLOYEE_ID = 3;
+Query OK, 1 row affected (0.18 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM EMPLOYEE;
++-------------+--------+
+| EMPLOYEE_ID | Name   |
++-------------+--------+
+|           1 | JAYA   |
+|           2 | SHREYA |
+|           3 | Rohit  |
+|           4 | RIDDHI |
++-------------+--------+
+mysql> DELETE FROM EMPLOYEE WHERE Name = 'REENA';
+Query OK, 1 row affected (0.18 sec)
+
+mysql> DELETE FROM EMPLOYEE WHERE Name like '%A%';
+Query OK, 2 rows affected (0.23 sec)
+
+mysql> select * from employee;
++-------------+--------+
+| EMPLOYEE_ID | Name   |
++-------------+--------+
+|           4 | RIDDHI |
++-------------+--------+
+1 row in set (0.00 sec)
+
+mysql> DROP TABLE EMPLOYEE;
+Query OK, 0 rows affected (0.79 sec)
+
+mysql> SELECT * FROM EMPLOYEE;
+ERROR 1146 (42S02): Table 'adventureworks.employee' doesn't exist
+
+
