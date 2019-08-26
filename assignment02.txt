@@ -1,0 +1,379 @@
+> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| adventureworks     |
+| employee           |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.06 sec)
+
+mysql> CREATE DATABASE TEXT;
+Query OK, 1 row affected (0.43 sec)
+ USE Text;
+Database changed
+mysql> CREATE TABLE TextDataTypes
+    -> (
+    -> A char(10),
+    -> B varchar(10),
+    -> C Text
+    -> );
+Query OK, 0 rows affected (0.61 sec)
+
+mysql> DESCRIBE TextDataTypes;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| A     | char(10)    | YES  |     | NULL    |       |
+| B     | varchar(10) | YES  |     | NULL    |       |
+| C     | text        | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+ INSERT INTO TextDataTypes
+    ->   VALUES
+    -> ('abcdef', '123', 'Text data - larger strings are accepted here'),
+    ->
+    -> ('abcdef', 'abcdef', 'Text data - larger strings are accepted here');
+Query OK, 2 rows affected (0.20 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+
+mysql> CREATE TABLE NumDatatypes
+    -> (
+    -> A tinyint,
+    -> B smallint,
+    -> C mediumint,
+    -> D int,
+    -> E bigint,
+    -> F decimal(8, 2),
+    -> G double(8,2),
+    -> H float
+    -> );
+Query OK, 0 rows affected, 1 warning (0.70 sec)
+
+mysql> INSERT INTO NumDataTypes VALUES(13,130,33456,333456,33333456,999999.99,999999.99,999999.99);
+Query OK, 1 row affected (0.24 sec)
+
+mysql> INSERT INTO NumDataTypes VALUES(110,234,3345,33345,3333345,999999.99,999999.99,999999.99);
+Query OK, 1 row affected (0.21 sec)
+
+mysql> SELECT * FROM NumDataTypes;
++------+------+-------+--------+----------+-----------+-----------+---------+
+| A    | B    | C     | D      | E        | F         | G         | H       |
++------+------+-------+--------+----------+-----------+-----------+---------+
+|   13 |  130 | 33456 | 333456 | 33333456 | 999999.99 | 999999.99 | 1000000 |
+|  110 |  234 |  3345 |  33345 |  3333345 | 999999.99 | 999999.99 | 1000000 |
++------+------+-------+--------+----------+-----------+-----------+---------+
+2 rows in set (0.10 sec)
+
+mysql> CREATE TABLE DateDataTypes
+    -> (
+    -> A date,
+    -> B datetime,
+    -> C timestamp,
+    -> D time
+    -> );
+Query OK, 0 rows affected (0.90 sec)
+ INSERT INTO DateDataTypes VALUES
+    -> ('2019-08-26',
+    ->  '2019-08-26 10:30:23',
+    ->  '20190826103023',
+    ->  '10:30:23'
+    -> );
+Query OK, 1 row affected (0.20 sec)
+
+mysql> SELECT * FROM DateDataTypes;
++------------+---------------------+---------------------+----------+
+| A          | B                   | C                   | D        |
++------------+---------------------+---------------------+----------+
+| 2019-08-26 | 2019-08-26 10:30:23 | 2019-08-26 10:30:23 | 10:30:23 |
++------------+---------------------+---------------------+----------+
+mysql> CREATE TABLE SplDataTypes
+    -> (
+    -> ID int AUTO_INCREMENT primary key,
+    -> Membership ENUM('Silver','Gold','Platinum'),
+    -> Hobbies SET ('Swimming','Sking','Cricket','Football')
+    -> );
+Query OK, 0 rows affected (0.96 sec)
+
+mysql> INSERT INTO SplDataTypes (Membership,Hobbies) VALUES
+    -> ('Silver','Football');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> SELECT * FROM SplDataTypes;
++----+------------+----------+
+| ID | Membership | Hobbies  |
++----+------------+----------+
+|  1 | Silver     | Football |
++----+------------+----------+
+
+mysql> CREATE TABLE ProductCategory
+    -> (
+    -> ProductCategory_ID int,
+    -> Name varchar(20)
+    -> );
+Query OK, 0 rows affected (0.73 sec)
+
+mysql> INSERT INTO ProductCategory VALUES(1,'Fruits');
+Query OK, 1 row affected (0.16 sec)
+
+mysql> INSERT INTO ProductCategory VALUES(2,'Vegetables');
+Query OK, 1 row affected (0.23 sec)
+
+mysql> INSERT INTO ProductCategory VALUES(3,'Book');
+Query OK, 1 row affected (0.16 sec)
+
+mysql> INSERT INTO ProductCategory VALUES(4,'Movies');
+Query OK, 1 row affected (0.18 sec)
+
+mysql> SELECT * FROM ProductCategory;
++--------------------+------------+
+| ProductCategory_ID | Name       |
++--------------------+------------+
+|                  1 | Fruits     |
+|                  2 | Vegetables |
+|                  3 | Book       |
+|                  4 | Movies     |
++--------------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT *
+    ->   FROM ProductCategory
+    ->   ORDER BY Name ASC;
++--------------------+------------+
+| ProductCategory_ID | Name       |
++--------------------+------------+
+|                  3 | Book       |
+|                  1 | Fruits     |
+|                  4 | Movies     |
+|                  2 | Vegetables |
++--------------------+------------+
+4 rows in set (0.09 sec)
+mysql> SELECT *
+    -> FROM ProductCategory
+    -> ORDER BY Name DESC;
++--------------------+------------+
+| ProductCategory_ID | Name       |
++--------------------+------------+
+|                  2 | Vegetables |
+|                  4 | Movies     |
+|                  1 | Fruits     |
+|                  3 | Book       |
++--------------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM ProductCategory ORDER BY ProductCategory_ID DESC;
++--------------------+------------+
+| ProductCategory_ID | Name       |
++--------------------+------------+
+|                  4 | Movies     |
+|                  3 | Book       |
+|                  2 | Vegetables |
+|                  1 | Fruits     |
++--------------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT ProductCategory_ID AS ID,
+    -> Name
+    -> FROM ProductCategory
+    -> ORDER BY ID DESC;
++------+------------+
+| ID   | Name       |
++------+------------+
+|    4 | Movies     |
+|    3 | Book       |
+|    2 | Vegetables |
+|    1 | Fruits     |
++------+------------+
+4 rows in set (0.00 sec)
+mysql> SELECT ProductCategory_ID AS CatID,
+    -> Name
+    -> FROM ProductCategory
+    -> ORDER BY CatID DESC;
++-------+------------+
+| CatID | Name       |
++-------+------------+
+|     4 | Movies     |
+|     3 | Book       |
+|     2 | Vegetables |
+|     1 | Fruits     |
++-------+------------+
+4 rows in set (0.00 sec)
+mysql> CREATE TABLE ProductSubCategory
+    -> (
+    -> Name varchar(20),
+    -> Type varchar(20)
+    -> );
+Query OK, 0 rows affected (1.02 sec)
+
+mysql> INSERT INTO ProductSubCategory VALUES("apple","fruit");
+Query OK, 1 row affected (0.20 sec)
+
+mysql> INSERT INTO ProductSubCategory VALUES("banana","fruit");
+Query OK, 1 row affected (0.15 sec)
+
+mysql> INSERT INTO ProductSubCategory VALUES("mango","fruit");
+Query OK, 1 row affected (0.17 sec)
+
+mysql> INSERT INTO ProductSubCategory VALUES("orange","fruit");
+Query OK, 1 row affected (0.15 sec)
+
+mysql> INSERT INTO ProductSubCategory VALUES("potato","vegetables");
+Query OK, 1 row affected (0.18 sec)
+
+mysql> INSERT INTO ProductSubCategory VALUES("onion","vegetables");
+Query OK, 1 row affected (0.18 sec)
+
+mysql> INSERT INTO ProductSubCategory VALUES("carrot","vegetables");
+Query OK, 1 row affected (0.09 sec)
+
+mysql> INSERT INTO ProductSubCategory VALUES("cabbage","vegetables");
+Query OK, 1 row affected (0.19 sec)
+
+mysql> select * from  ProductSubCategory;
++---------+------------+
+| Name    | Type       |
++---------+------------+
+| apple   | fruit      |
+| banana  | fruit      |
+| mango   | fruit      |
+| orange  | fruit      |
+| potato  | vegetables |
+| onion   | vegetables |
+| carrot  | vegetables |
+| cabbage | vegetables |
++---------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from  ProductSubCategory order by type desc;
++---------+------------+
+| Name    | Type       |
++---------+------------+
+| potato  | vegetables |
+| onion   | vegetables |
+| carrot  | vegetables |
+| cabbage | vegetables |
+| apple   | fruit      |
+| banana  | fruit      |
+| mango   | fruit      |
+| orange  | fruit      |
++---------+------------+
+8 rows in set (0.00 sec)
+mysql> select * from  ProductSubCategory order by name desc;
++---------+------------+
+| Name    | Type       |
++---------+------------+
+| potato  | vegetables |
+| orange  | fruit      |
+| onion   | vegetables |
+| mango   | fruit      |
+| carrot  | vegetables |
+| cabbage | vegetables |
+| banana  | fruit      |
+| apple   | fruit      |
++---------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from  ProductSubCategory order by name asc;
++---------+------------+
+| Name    | Type       |
++---------+------------+
+| apple   | fruit      |
+| banana  | fruit      |
+| cabbage | vegetables |
+| carrot  | vegetables |
+| mango   | fruit      |
+| onion   | vegetables |
+| orange  | fruit      |
+| potato  | vegetables |
++---------+------------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT Name,Type FROM ProductSubCategory ORDER BY 2;
++---------+------------+
+| Name    | Type       |
++---------+------------+
+| apple   | fruit      |
+| banana  | fruit      |
+| mango   | fruit      |
+| orange  | fruit      |
+| potato  | vegetables |
+| onion   | vegetables |
+| carrot  | vegetables |
+| cabbage | vegetables |
++---------+------------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT Name,Type FROM ProductSubCategory ORDER BY fruit;
+ERROR 1054 (42S22): Unknown column 'fruit' in 'order clause'
+mysql> SELECT Name,Type FROM ProductSubCategory ORDER BY 1;
++---------+------------+
+| Name    | Type       |
++---------+------------+
+| apple   | fruit      |
+| banana  | fruit      |
+| cabbage | vegetables |
+| carrot  | vegetables |
+| mango   | fruit      |
+| onion   | vegetables |
+| orange  | fruit      |
+| potato  | vegetables |
++---------+------------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT Type,Name FROM ProductSubCategory ORDER BY 2;
++------------+---------+
+| Type       | Name    |
++------------+---------+
+| fruit      | apple   |
+| fruit      | banana  |
+| vegetables | cabbage |
+| vegetables | carrot  |
+| fruit      | mango   |
+| vegetables | onion   |
+| fruit      | orange  |
+| vegetables | potato  |
++------------+---------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT Type,Name FROM ProductSubCategory ORDER BY 1;
++------------+---------+
+| Type       | Name    |
++------------+---------+
+| fruit      | apple   |
+| fruit      | banana  |
+| fruit      | mango   |
+| fruit      | orange  |
+| vegetables | potato  |
+| vegetables | onion   |
+| vegetables | carrot  |
+| vegetables | cabbage |
++------------+---------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT Name,Type FROM ProductSubCategory ORDER BY 1 LIMIT 4;
++---------+------------+
+| Name    | Type       |
++---------+------------+
+| apple   | fruit      |
+| banana  | fruit      |
+| cabbage | vegetables |
+| carrot  | vegetables |
++---------+------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT Name,Type FROM ProductSubCategory ORDER BY 1 LIMIT 2,5;
++---------+------------+
+| Name    | Type       |
++---------+------------+
+| cabbage | vegetables |
+| carrot  | vegetables |
+| mango   | fruit      |
+| onion   | vegetables |
+| orange  | fruit      |
++---------+------------+
+5 rows in set (0.00 sec)
